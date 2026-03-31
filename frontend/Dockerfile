@@ -1,5 +1,5 @@
 # Frontend Dockerfile - React + Vite multi-stage build
-FROM node:20-alpine AS builder
+FROM node:20.17.0-alpine AS builder
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY . .
 RUN npx vite build
 
 # Production stage - serve with Node
-FROM node:20-alpine
+FROM node:20.17.0-alpine
 
 WORKDIR /app
 
