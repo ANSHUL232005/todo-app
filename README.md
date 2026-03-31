@@ -158,6 +158,28 @@ npm run build:linux  # Linux
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
+
+## Deploying to Render (cloud)
+
+1. Ensure your repo includes `render.yaml` and `.github/workflows/render_deploy.yml`.
+2. Push main branch:
+```bash
+git add .
+git commit -m "Add Render deploy automation"
+git push origin main
+```
+3. Go to https://dashboard.render.com and import the GitHub repo.
+4. Use existing `render.yaml` and set secrets:
+   - `RENDER_API_KEY` in GitHub secrets for action if using automatic deploy.
+5. Render will build and deploy both:
+   - `backend` from `backend/Dockerfile`
+   - `frontend` from `frontend/Dockerfile`
+
+### Manual check after Render deploy
+- `curl https://your-backend-service.onrender.com/api/health`
+- `curl https://your-frontend-service.onrender.com`
+
+> If you prefer, open `RENDER_DEPLOYMENT.md` for step-by-step instructions.
 - `POST /api/auth/login` - Login user
 - `GET /api/auth/me` - Get current user
 - `PUT /api/auth/profile` - Update user profile
