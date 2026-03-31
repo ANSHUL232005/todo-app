@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Deployment Guide - TODO App</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f1419; color: #e0e0e0; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        h1 { color: #00d9ff; margin: 20px 0 10px; font-size: 2em; }
+        h2 { color: #00d9ff; margin: 30px 0 15px; font-size: 1.5em; border-bottom: 2px solid #00d9ff; padding-bottom: 10px; }
+        .step { background: #1a1f2e; border-left: 4px solid #00d9ff; padding: 20px; margin: 20px 0; border-radius: 4px; }
+        .step h3 { color: #00d9ff; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #141820; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #2a3140; }
+        th { background: #1a1f2e; color: #00d9ff; font-weight: bold; }
+        td { color: #c0c0c0; }
+        .value { background: #0a0f18; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; color: #00ff88; }
+        .warning { background: #2a1a1a; border-left: 4px solid #ff4444; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .warning strong { color: #ff6666; }
+        .success { background: #1a2a1a; border-left: 4px solid #00ff88; padding: 15px; margin: 15px 0; border-radius: 4px; }
+        .success strong { color: #00ff88; }
+        button { background: #00d9ff; color: #000; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin: 5px 5px 5px 0; }
+        button:hover { background: #00ffff; }
+        .copy-btn { background: #0055ff; color: #fff; padding: 5px 10px; font-size: 12px; }
+        .copy-btn:hover { background: #0077ff; }
+        code { background: #0a0f18; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; }
+        ul { margin-left: 20px; margin-top: 10px; }
+        li { margin: 8px 0; }
+        .banner { background: linear-gradient(135deg, #00d9ff, #0055ff); color: #000; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        .banner h1 { color: #000; margin: 0; font-size: 2.5em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner">
+            <h1>🚀 Render Deployment Guide</h1>
+            <p>Complete step-by-step instructions for deploying your TODO app</p>
+        </div>
+
+        <h2>📋 BACKEND SERVICE CONFIGURATION</h2>
+        
+        <div class="step">
+            <h3>Step 1: Service Settings</h3>
+            <p>Select these exact options:</p>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>What to Select</th>
+                </tr>
+                <tr>
+                    <td>Service Type</td>
+                    <td><span class="value">Web Service</span></td>
+                </tr>
+                <tr>
+                    <td>Environment</td>
+                    <td><span class="value">Docker</span></td>
+                </tr>
+                <tr>
+                    <td>Repository</td>
+                    <td><span class="value">todo-app</span></td>
+                </tr>
+                <tr>
+                    <td>Branch</td>
+                    <td><span class="value">main</span></td>
+                </tr>
+                <tr>
+                    <td>Service Name</td>
+                    <td><span class="value">todo-backend</span></td>
+                </tr>
+                <tr>
+                    <td>Region</td>
+                    <td><span class="value">Oregon</span></td>
+                </tr>
+                <tr>
+                    <td>Dockerfile Path</td>
+                    <td><span class="value">backend/Dockerfile</span></td>
+                </tr>
+                <tr>
+                    <td>Port</td>
+                    <td><span class="value">8000</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Environment Variables (Copy & Paste)</h3>
+            <p>Add these 5 environment variables:</p>
+            <table>
+                <tr>
+                    <th>Variable Name</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td><code>DATABASE_URL</code></td>
+                    <td><span class="value">sqlite:///./todo.db</span></td>
+                    <td><button class="copy-btn" onclick="copyToClipboard('sqlite:///./todo.db')">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><code>SECRET_KEY</code></td>
+                    <td><span class="value">tdZBNliEGoHgUIqQMG_D4jzcU1To9KoFYkf9WyZ6gAQ</span></td>
+                    <td><button class="copy-btn" onclick="copyToClipboard('tdZBNliEGoHgUIqQMG_D4jzcU1To9KoFYkf9WyZ6gAQ')">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><code>ALGORITHM</code></td>
+                    <td><span class="value">HS256</span></td>
+                    <td><button class="copy-btn" onclick="copyToClipboard('HS256')">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><code>ACCESS_TOKEN_EXPIRE_MINUTES</code></td>
+                    <td><span class="value">30</span></td>
+                    <td><button class="copy-btn" onclick="copyToClipboard('30')">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><code>REFRESH_TOKEN_EXPIRE_DAYS</code></td>
+                    <td><span class="value">7</span></td>
+                    <td><button class="copy-btn" onclick="copyToClipboard('7')">Copy</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Deploy Backend</h3>
+            <p>Click the <button>Deploy</button> button</p>
+            <p style="margin-top: 10px; color: #ffaa00;"><strong>⏳ Wait 2-3 minutes for backend to build and deploy.</strong></p>
+            <p style="margin-top: 10px;">When done, you'll see: <span style="color: #00ff88;">✅ Live</span></p>
+            <p style="margin-top: 10px;"><strong>📝 Copy your backend URL from the dashboard</strong> (looks like <code>https://todo-backend-abc123.onrender.com</code>)</p>
+        </div>
+
+        <h2>🎨 FRONTEND SERVICE CONFIGURATION</h2>
+
+        <div class="step">
+            <h3>Step 4: Frontend Service Settings</h3>
+            <p>Select these exact options:</p>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>What to Select</th>
+                </tr>
+                <tr>
+                    <td>Service Type</td>
+                    <td><span class="value">Web Service</span></td>
+                </tr>
+                <tr>
+                    <td>Environment</td>
+                    <td><span class="value">Docker</span></td>
+                </tr>
+                <tr>
+                    <td>Repository</td>
+                    <td><span class="value">todo-app</span></td>
+                </tr>
+                <tr>
+                    <td>Branch</td>
+                    <td><span class="value">main</span></td>
+                </tr>
+                <tr>
+                    <td>Service Name</td>
+                    <td><span class="value">todo-frontend</span></td>
+                </tr>
+                <tr>
+                    <td>Region</td>
+                    <td><span class="value">Oregon</span></td>
+                </tr>
+                <tr>
+                    <td>Dockerfile Path</td>
+                    <td><span class="value">frontend/Dockerfile</span></td>
+                </tr>
+                <tr>
+                    <td>Port</td>
+                    <td><span class="value">3000</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Frontend Environment Variable</h3>
+            <p>Add this environment variable:</p>
+            <table>
+                <tr>
+                    <th>Variable Name</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td><code>REACT_APP_API_URL</code></td>
+                    <td><span class="value">[Paste your backend URL here]</span></td>
+                </tr>
+            </table>
+            <p style="margin-top: 15px; color: #ffaa00;"><strong>⚠️ Replace [Paste your backend URL here] with the actual URL you copied in Step 3</strong></p>
+            <p style="margin-top: 10px;">Example: <code>https://todo-backend-abc123def456.onrender.com</code></p>
+        </div>
+
+        <div class="step">
+            <h3>Step 6: Deploy Frontend</h3>
+            <p>Click the <button>Deploy</button> button</p>
+            <p style="margin-top: 10px; color: #ffaa00;"><strong>⏳ Wait 2-3 minutes for frontend to build and deploy.</strong></p>
+            <p style="margin-top: 10px;">When done, you'll see: <span style="color: #00ff88;">✅ Live</span></p>
+        </div>
+
+        <h2>🎉 VERIFY DEPLOYMENT</h2>
+
+        <div class="success">
+            <strong>✅ Both services showing "Live"?</strong>
+            <p>Your URLs are now:</p>
+            <ul>
+                <li>Frontend: <code>https://todo-frontend-xxxxx.onrender.com</code></li>
+                <li>Backend: <code>https://todo-backend-xxxxx.onrender.com</code></li>
+                <li>API Docs: <code>https://todo-backend-xxxxx.onrender.com/docs</code></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>Test Your App</h3>
+            <ol>
+                <li>Click on your frontend URL</li>
+                <li>Click "Register"</li>
+                <li>Create an account</li>
+                <li>Create a TODO item</li>
+                <li>Verify it appears in the list</li>
+            </ol>
+            <p style="margin-top: 15px;"><strong>If all above steps work, your app is live on the internet! 🚀</strong></p>
+        </div>
+
+        <h2>⚠️ COMMON MISTAKES TO AVOID</h2>
+
+        <div class="warning">
+            <strong>❌ DO NOT:</strong>
+            <ul>
+                <li>Select "Static Site" (wrong type)</li>
+                <li>Select "Web Service (Node)" (use Docker instead)</li>
+                <li>Change port numbers (8000 backend, 3000 frontend)</li>
+                <li>Modify Dockerfile paths</li>
+                <li>Skip environment variables</li>
+                <li>Forget backend URL in frontend REACT_APP_API_URL</li>
+            </ul>
+        </div>
+
+        <h2>🆘 TROUBLESHOOTING</h2>
+
+        <table>
+            <tr>
+                <th>Problem</th>
+                <th>Solution</th>
+            </tr>
+            <tr>
+                <td>"Build Failed"</td>
+                <td>Check requirements.txt has all packages; view logs</td>
+            </tr>
+            <tr>
+                <td>Frontend blank page</td>
+                <td>Verify REACT_APP_API_URL points to correct backend</td>
+            </tr>
+            <tr>
+                <td>Can't register users</td>
+                <td>Check SECRET_KEY environment variable is set</td>
+            </tr>
+            <tr>
+                <td>"Cannot reach API"</td>
+                <td>Ensure both services show "Live" status</td>
+            </tr>
+            <tr>
+                <td>Database empty after redeploy</td>
+                <td>SQLite resets; use PostgreSQL for persistence</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard: ' + text);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
+    </script>
+</body>
+</html>
